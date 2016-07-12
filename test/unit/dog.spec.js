@@ -14,19 +14,50 @@ describe('Dog', () => {
   });
 
   describe('#feed', () => {
-    it('should add 10 to the dogs health', sinon.test(function (done) {
+    it('should add 10 to the dogs health', () => {
       const d = new Dog({ name: 'fido',
                           age: 3,
                           health: 50,
                           toy: 'Bones' });
-      this.stub(d, 'save').yields(null, { health: 60 });
       d.feed((health) => {
-        sinon.assert.calledOnce(d.save);
         expect(health).to.equal(60);
-        done();
       });
-    }));
+    });
+    it('should add only 5 to the dogs health', () => {
+      const d = new Dog({ name: 'fido',
+                          age: 3,
+                          health: 95,
+                          toy: 'Bones' });
+      d.feed((health) => {
+        expect(health).to.equal(100);
+      });
+    });
+    it('should add nothing to the dogs health, already max', () => {
+      const d = new Dog({ name: 'fido',
+                          age: 3,
+                          health: 100,
+                          toy: 'Bones' });
+      d.feed((health) => {
+        expect(health).to.equal(100);
+      });
+    });
   });
+
+// Chyld's example below
+  // describe('#feed', () => {
+  //   it('should add 10 to the dogs health', sinon.test(function (done) {
+  //     const d = new Dog({ name: 'fido',
+  //                         age: 3,
+  //                         health: 50,
+  //                         toy: 'Bones' });
+  //     this.stub(d, 'save').yields(null, { health: 60 });
+  //     d.feed((health) => {
+  //       sinon.assert.calledOnce(d.save);
+  //       expect(health).to.equal(60);
+  //       done();
+  //     });
+  //   }));
+  // });
 
   describe('constructor', () => {
     it('should create a dog object', (done) => {

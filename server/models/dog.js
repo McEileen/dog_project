@@ -14,11 +14,10 @@ const schema = new Schema({
   dateCreated: { type: Date, default: Date.now },
 });
 
-schema.methods.feed = function(cb){
-  this.health += 10;
-  this.save((err, dog) => {
-    cb(dog.health);
-  });
+schema.methods.feed = function(){
+  if (this.health > 90) this.health = 100
+  else this.health += 10;
+  return this.health;
 };
 
 function duplicateDogNameValidator(name, cb) {
